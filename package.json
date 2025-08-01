@@ -1,0 +1,26 @@
+{
+  "name": "lab-testing-management-system",
+  "version": "1.0.0",
+  "description": "Lab Testing & Calibration Management System",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run start:dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "start": "cd backend && npm run start:prod"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "keywords": [
+    "lab-testing",
+    "calibration",
+    "management-system",
+    "nestjs",
+    "react",
+    "typescript"
+  ],
+  "author": "Lab Testing System",
+  "license": "MIT"
+}
