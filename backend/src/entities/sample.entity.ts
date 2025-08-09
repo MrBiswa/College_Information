@@ -1,4 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { User } from './user.entity';
+import { TestTemplate } from './test-template.entity';
+import { Report } from './report.entity';
 
 export enum SampleStatus {
   SUBMITTED = 'submitted',
@@ -87,22 +90,22 @@ export class Sample {
   @Column('text', { nullable: true })
   notes: string;
 
-  @ManyToOne(() => 'User', 'assignedSamples', { nullable: true })
+  @ManyToOne(() => User, (user) => user.assignedSamples, { nullable: true })
   @JoinColumn({ name: 'assigned_employee_id' })
-  assignedEmployee: any;
+  assignedEmployee: User;
 
   @Column({ nullable: true })
   assigned_employee_id: string;
 
-  @ManyToOne(() => 'TestTemplate', { nullable: true })
+  @ManyToOne(() => TestTemplate, { nullable: true })
   @JoinColumn({ name: 'test_template_id' })
-  testTemplate: any;
+  testTemplate: TestTemplate;
 
   @Column({ nullable: true })
   test_template_id: string;
 
-  @OneToMany(() => 'Report', 'sample')
-  reports: any[];
+  @OneToMany(() => Report, (report) => report.sample)
+  reports: Report[];
 
   @CreateDateColumn()
   createdAt: Date;

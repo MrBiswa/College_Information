@@ -1,4 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Sample } from './sample.entity';
+import { TestTemplate } from './test-template.entity';
+import { User } from './user.entity';
 
 export enum ReportStatus {
   DRAFT = 'draft',
@@ -47,37 +50,37 @@ export class Report {
   })
   status: ReportStatus;
 
-  @ManyToOne(() => 'Sample', 'reports')
+  @ManyToOne(() => Sample, (sample) => sample.reports)
   @JoinColumn({ name: 'sample_id' })
-  sample: any;
+  sample: Sample;
 
   @Column()
   sample_id: string;
 
-  @ManyToOne(() => 'TestTemplate')
+  @ManyToOne(() => TestTemplate)
   @JoinColumn({ name: 'test_template_id' })
-  testTemplate: any;
+  testTemplate: TestTemplate;
 
   @Column()
   test_template_id: string;
 
-  @ManyToOne(() => 'User', 'preparedReports')
+  @ManyToOne(() => User, (user) => user.preparedReports)
   @JoinColumn({ name: 'prepared_by_id' })
-  preparedBy: any;
+  preparedBy: User;
 
   @Column()
   prepared_by_id: string;
 
-  @ManyToOne(() => 'User', { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'reviewed_by_id' })
-  reviewedBy: any;
+  reviewedBy: User;
 
   @Column({ nullable: true })
   reviewed_by_id: string;
 
-  @ManyToOne(() => 'User', { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'approved_by_id' })
-  approvedBy: any;
+  approvedBy: User;
 
   @Column({ nullable: true })
   approved_by_id: string;

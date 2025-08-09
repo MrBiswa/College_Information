@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { Sample, SampleStatus } from '../../entities/sample.entity';
 import { User } from '../../entities/user.entity';
 import { TestTemplate } from '../../entities/test-template.entity';
@@ -23,12 +23,12 @@ export class SamplesService {
     const count = await this.sampleRepository.count();
     const sampleNumber = `LAB-${new Date().getFullYear()}-${String(count + 1).padStart(4, '0')}`;
 
-    const sample = this.sampleRepository.create({
+    const sample: Sample = this.sampleRepository.create({
       ...createSampleDto,
       sampleNumber,
       manufacturingDate: createSampleDto.manufacturingDate ? new Date(createSampleDto.manufacturingDate) : null,
       expectedCompletionDate: createSampleDto.expectedCompletionDate ? new Date(createSampleDto.expectedCompletionDate) : null,
-    });
+    } as DeepPartial<Sample>);
 
     return this.sampleRepository.save(sample);
   }

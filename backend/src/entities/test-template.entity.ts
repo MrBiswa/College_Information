@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Sample } from './sample.entity';
 
 export enum TestingCategory {
   ELECTRICAL = 'electrical',
@@ -95,8 +96,8 @@ export class TestTemplate {
   @Column('json', { nullable: true })
   safetyRequirements: string[];
 
-  @OneToMany(() => 'Sample', 'testTemplate')
-  samples: any[];
+  @OneToMany(() => Sample, (sample) => sample.testTemplate)
+  samples: Sample[];
 
   @CreateDateColumn()
   createdAt: Date;

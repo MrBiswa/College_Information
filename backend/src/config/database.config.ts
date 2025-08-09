@@ -4,10 +4,12 @@ import { Sample } from '../entities/sample.entity';
 import { TestTemplate } from '../entities/test-template.entity';
 import { Report } from '../entities/report.entity';
 
+const dbPort = process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432;
+
 export const databaseConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT, 10) || 5432,
+  port: Number.isFinite(dbPort) ? dbPort : 5432,
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || 'password',
   database: process.env.DB_NAME || 'lab_testing_db',
