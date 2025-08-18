@@ -22,5 +22,9 @@
     "typescript"
   ],
   "author": "Lab Testing System",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-scripts": "^5.0.1"
+  }
 }

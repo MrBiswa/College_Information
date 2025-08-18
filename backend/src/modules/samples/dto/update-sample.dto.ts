@@ -1,9 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { IsString, IsEnum, IsOptional, IsDateString } from 'class-validator';
 import { CreateSampleDto } from './create-sample.dto';
 import { SampleStatus } from '../../../entities/sample.entity';
 
-export class UpdateSampleDto extends PartialType(CreateSampleDto) {
+export class UpdateSampleDto extends CreateSampleDto {
   @IsEnum(SampleStatus)
   @IsOptional()
   status?: SampleStatus;

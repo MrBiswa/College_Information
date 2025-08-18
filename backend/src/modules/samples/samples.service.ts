@@ -18,19 +18,20 @@ export class SamplesService {
     private testTemplateRepository: Repository<TestTemplate>,
   ) {}
 
-  async create(createSampleDto: CreateSampleDto): Promise<Sample> {
+  async create(payload: CreateSampleDto): Promise<Sample> {
     // Generate sample number
     const count = await this.sampleRepository.count();
     const sampleNumber = `LAB-${new Date().getFullYear()}-${String(count + 1).padStart(4, '0')}`;
 
-    const sample = this.sampleRepository.create({
-      ...createSampleDto,
-      sampleNumber,
-      manufacturingDate: createSampleDto.manufacturingDate ? new Date(createSampleDto.manufacturingDate) : null,
-      expectedCompletionDate: createSampleDto.expectedCompletionDate ? new Date(createSampleDto.expectedCompletionDate) : null,
-    });
+    const data: any = {
+      ...payload,
+      sampleNumber: sampleNumber,
+      manufacturingDate: payload.manufacturingDate ? new Date(payload.manufacturingDate) : null,
+      expectedCompletionDate: payload.expectedCompletionDate ? new Date(payload.expectedCompletionDate) : null,
+    }
+    const sample = this.sampleRepository.create(data);
 
-    return this.sampleRepository.save(sample);
+    return this.sampleRepository.save(sample) as any;
   }
 
   async findAll(filters?: {

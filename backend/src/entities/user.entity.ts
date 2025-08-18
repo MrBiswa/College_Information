@@ -1,4 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Sample } from './sample.entity';
+import { Report } from './report.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -50,11 +52,11 @@ export class User {
   @Column({ nullable: true })
   experience: string;
 
-  @OneToMany(() => 'Sample', 'assignedEmployee')
-  assignedSamples: any[];
-
-  @OneToMany(() => 'Report', 'preparedBy')
-  preparedReports: any[];
+  @OneToMany(() => Sample, (sample) => sample.assignedEmployee)
+  assignedSamples: Sample[];
+  
+  @OneToMany(() => Report, (report) => report.preparedBy)
+  preparedReports: Report[];
 
   @CreateDateColumn()
   createdAt: Date;
