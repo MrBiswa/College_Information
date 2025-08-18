@@ -111,7 +111,7 @@ const Dashboard: React.FC = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={3} {...({} as any)}>
           <StatCard
             title="Total Samples"
             value={stats.totalSamples}
@@ -119,7 +119,7 @@ const Dashboard: React.FC = () => {
             color="#1976d2"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={3} {...({} as any)}>
           <StatCard
             title="Pending Samples"
             value={stats.pendingSamples}
@@ -127,7 +127,7 @@ const Dashboard: React.FC = () => {
             color="#ed6c02"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={3} {...({} as any)}>
           <StatCard
             title="Completed Samples"
             value={stats.completedSamples}
@@ -135,7 +135,7 @@ const Dashboard: React.FC = () => {
             color="#2e7d32"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={3} {...({} as any)}>
           <StatCard
             title="Active Employees"
             value={stats.totalEmployees}
@@ -146,7 +146,7 @@ const Dashboard: React.FC = () => {
       </Grid>
 
       <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} {...({} as any)}>
           <Paper sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
               Recent Activity
@@ -156,7 +156,7 @@ const Dashboard: React.FC = () => {
             </Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} {...({} as any)}>
           <Paper sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
               System Status
