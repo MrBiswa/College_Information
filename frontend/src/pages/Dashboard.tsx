@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Paper,
-} from '@mui/material';
+import { Card, CardContent, Typography, Box, Paper } from '@mui/material';
 import {
   Science,
   People,
   Assignment,
   Description,
 } from '@mui/icons-material';
-import axios from 'axios';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+import { apiClient } from '../api/client';
+import { fetchTemplates } from '../api/templates';
+import { fetchReports } from '../api/reports';
 
 interface DashboardStats {
   totalSamples: number;
@@ -44,9 +37,11 @@ const Dashboard: React.FC = () => {
     try {
       // In a real implementation, you'd have a dashboard stats endpoint
       // For now, we'll make individual calls
-      const [samplesRes, employeesRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/samples`),
-        axios.get(`${API_BASE_URL}/samples/employee-workload`),
+      const [samplesRes, employeesRes, templates, reports] = await Promise.all([
+        apiClient.get('/samples'),
+        apiClient.get('/samples/employee-workload'),
+        fetchTemplates(),
+        fetchReports(),
       ]);
 
       const samples = samplesRes.data;
@@ -57,8 +52,8 @@ const Dashboard: React.FC = () => {
         pendingSamples: samples.filter((s: any) => s.status === 'submitted' || s.status === 'assigned').length,
         completedSamples: samples.filter((s: any) => s.status === 'completed').length,
         totalEmployees: employees.length,
-        totalTemplates: 0, // Would be fetched from templates endpoint
-        totalReports: 0, // Would be fetched from reports endpoint
+        totalTemplates: templates.length,
+        totalReports: reports.length,
       });
     } catch (error) {
       console.error('Failed to fetch dashboard stats:', error);
@@ -110,63 +105,47 @@ const Dashboard: React.FC = () => {
         Welcome to the Lab Testing & Calibration Management System
       </Typography>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Total Samples"
-            value={stats.totalSamples}
-            icon={<Science />}
-            color="#1976d2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Pending Samples"
-            value={stats.pendingSamples}
-            icon={<Assignment />}
-            color="#ed6c02"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Completed Samples"
-            value={stats.completedSamples}
-            icon={<Description />}
-            color="#2e7d32"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Active Employees"
-            value={stats.totalEmployees}
-            icon={<People />}
-            color="#9c27b0"
-          />
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          display: 'grid',
+          gap: 3,
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)',
+          },
+        }}
+      >
+        <StatCard title="Total Samples" value={stats.totalSamples} icon={<Science />} color="#1976d2" />
+        <StatCard title="Pending Samples" value={stats.pendingSamples} icon={<Assignment />} color="#ed6c02" />
+        <StatCard title="Completed Samples" value={stats.completedSamples} icon={<Description />} color="#2e7d32" />
+        <StatCard title="Active Employees" value={stats.totalEmployees} icon={<People />} color="#9c27b0" />
+      </Box>
 
-      <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Recent Activity
-            </Typography>
-            <Typography color="text.secondary">
-              No recent activity to display.
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              System Status
-            </Typography>
-            <Typography color="text.secondary">
-              All systems operational.
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          mt: 3,
+          display: 'grid',
+          gap: 3,
+          gridTemplateColumns: {
+            xs: '1fr',
+            md: 'repeat(2, 1fr)',
+          },
+        }}
+      >
+        <Paper sx={{ p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Recent Activity
+          </Typography>
+          <Typography color="text.secondary">No recent activity to display.</Typography>
+        </Paper>
+        <Paper sx={{ p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            System Status
+          </Typography>
+          <Typography color="text.secondary">All systems operational.</Typography>
+        </Paper>
+      </Box>
     </Box>
   );
 };
