@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Paper,
-} from '@mui/material';
+import { Card, CardContent, Typography, Box, Paper, Grid } from '@mui/material';
 import {
   Science,
   People,
   Assignment,
   Description,
 } from '@mui/icons-material';
-import axios from 'axios';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+import { apiClient } from '../api/client';
+import { fetchTemplates } from '../api/templates';
+import { fetchReports } from '../api/reports';
 
 interface DashboardStats {
   totalSamples: number;
@@ -44,9 +37,11 @@ const Dashboard: React.FC = () => {
     try {
       // In a real implementation, you'd have a dashboard stats endpoint
       // For now, we'll make individual calls
-      const [samplesRes, employeesRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/samples`),
-        axios.get(`${API_BASE_URL}/samples/employee-workload`),
+      const [samplesRes, employeesRes, templates, reports] = await Promise.all([
+        apiClient.get('/samples'),
+        apiClient.get('/samples/employee-workload'),
+        fetchTemplates(),
+        fetchReports(),
       ]);
 
       const samples = samplesRes.data;
@@ -57,8 +52,8 @@ const Dashboard: React.FC = () => {
         pendingSamples: samples.filter((s: any) => s.status === 'submitted' || s.status === 'assigned').length,
         completedSamples: samples.filter((s: any) => s.status === 'completed').length,
         totalEmployees: employees.length,
-        totalTemplates: 0, // Would be fetched from templates endpoint
-        totalReports: 0, // Would be fetched from reports endpoint
+        totalTemplates: templates.length,
+        totalReports: reports.length,
       });
     } catch (error) {
       console.error('Failed to fetch dashboard stats:', error);
