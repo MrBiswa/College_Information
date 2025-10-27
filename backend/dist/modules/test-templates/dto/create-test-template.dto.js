@@ -1,0 +1,98 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateTestTemplateDto = void 0;
+const class_validator_1 = require("class-validator");
+const test_template_entity_1 = require("../../../entities/test-template.entity");
+class CreateTestTemplateDto {
+    name;
+    description;
+    testingCategory;
+    productCategory;
+    productSubCategory;
+    reportSections;
+    complianceStandards;
+    equipmentRequired;
+    isActive;
+    isCustom;
+    estimatedDuration;
+    specialInstructions;
+    samplePreparationSteps;
+    safetyRequirements;
+}
+exports.CreateTestTemplateDto = CreateTestTemplateDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateTestTemplateDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTestTemplateDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(test_template_entity_1.TestingCategory),
+    __metadata("design:type", String)
+], CreateTestTemplateDto.prototype, "testingCategory", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(test_template_entity_1.ProductCategory),
+    __metadata("design:type", String)
+], CreateTestTemplateDto.prototype, "productCategory", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTestTemplateDto.prototype, "productSubCategory", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], CreateTestTemplateDto.prototype, "reportSections", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], CreateTestTemplateDto.prototype, "complianceStandards", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], CreateTestTemplateDto.prototype, "equipmentRequired", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], CreateTestTemplateDto.prototype, "isActive", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], CreateTestTemplateDto.prototype, "isCustom", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateTestTemplateDto.prototype, "estimatedDuration", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTestTemplateDto.prototype, "specialInstructions", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], CreateTestTemplateDto.prototype, "samplePreparationSteps", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], CreateTestTemplateDto.prototype, "safetyRequirements", void 0);
+//# sourceMappingURL=create-test-template.dto.js.map
